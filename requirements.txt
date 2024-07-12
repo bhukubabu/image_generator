@@ -1,7 +1,5 @@
 streamlit
-time
 matplotlib
-io
 requests
 PIL
 
