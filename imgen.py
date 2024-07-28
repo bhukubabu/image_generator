@@ -6,7 +6,7 @@ from PIL import Image
 import time
 
 API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
-api_token ='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'
+api_token ='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'
 headers = {"Authorization": f"Bearer {api_token}"}
 
 
