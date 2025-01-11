@@ -37,7 +37,7 @@ if but1:
                 }
             })
 
-            images = Image.open(io.BytesIO(image_bytes))
+        images = Image.open(io.BytesIO(image_bytes))
         st.success('Done!')
         # Display image directly without saving
         st.image(images)
