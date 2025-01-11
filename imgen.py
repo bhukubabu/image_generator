@@ -20,15 +20,7 @@ def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.content
 
-image_bytes = query({
-    "inputs": prompt,
-    "parameters": {
-        "guidance_scale": 8.6,
-        "num_inference_steps": 90,
-    }
-})
 
-images = Image.open(io.BytesIO(image_bytes))
 
 but1 = st.button("Generate")
 
@@ -37,7 +29,15 @@ if but1:
         st.error('Please provide a valid prompt', icon="🚨")
     else:
         with st.spinner("Please wait......."):
-            time.sleep(5)
+            image_bytes = query({
+                "inputs": prompt,
+                "parameters": {
+                    "guidance_scale": 8.6,
+                    "num_inference_steps": 90,
+                }
+            })
+
+            images = Image.open(io.BytesIO(image_bytes))
         st.success('Done!')
         # Display image directly without saving
         st.image(images)
