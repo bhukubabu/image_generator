@@ -54,9 +54,12 @@ if but1:
         if image_bytes:
             try:
                 images = Image.open(io.BytesIO(image_bytes))
-                st.success('Done!')
-                st.image(images)  
-                with io.BytesIO() as img_buffer:
+            except Exception as e:
+                st.error(f"Error opening the image: {str(e)}")
+                st.rerun()
+            st.success('Done!')
+            st.image(images)  
+            with io.BytesIO() as img_buffer:
                     images.save(img_buffer, format="JPEG")
                     img_buffer.seek(0)
                     st.download_button(
@@ -65,8 +68,6 @@ if but1:
                         file_name='images.jpg',
                         mime='image/jpg'
                     )
-            except Exception as e:
-                st.error(f"Error opening the image: {str(e)}")
-                st.rerun()  # Clear the cache if there's an issue
+              # Clear the cache if there's an issue
         else:
             st.error("Failed to generate an image. Please try again.")
