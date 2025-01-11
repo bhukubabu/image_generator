@@ -41,12 +41,15 @@ if but1:
         st.success('Done!')
         # Display image directly without saving
         st.image(images)
-        with io.BytesIO() as img_buffer:
-            images.save(img_buffer, format="JPEG")
-            img_buffer.seek(0)
-            but2 = st.download_button(
-                label="Download",
-                data=img_buffer,
-                file_name='images.jpg',
-                mime='image/jpg'
-            )
+        try:
+            with io.BytesIO() as img_buffer:
+                images.save(img_buffer, format="JPEG")
+                img_buffer.seek(0)
+                but2 = st.download_button(
+                    label="Download",
+                    data=img_buffer,
+                    file_name='images.jpg',
+                    mime='image/jpg'
+                )
+        except:
+            st.clear_cache()
