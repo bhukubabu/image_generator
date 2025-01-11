@@ -39,7 +39,7 @@ with st.container(height=280):
 but1 = st.button("Generate", on_click=fetch_prompt, args=(prompt,))
 
 if but1:
-    if prompt == "":
+    if st.session_state.prompt == "":
         st.error('Please provide a valid prompt', icon="🚨")
     else:
         with st.spinner("Please wait......."):
