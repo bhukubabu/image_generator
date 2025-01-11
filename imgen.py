@@ -54,11 +54,12 @@ if but1:
         if image_bytes:
             try:
                 images = Image.open(io.BytesIO(image_bytes))
+                st.success('Done!')
+                st.image(images)
             except Exception as e:
                 st.error(f"Error opening the image: {str(e)}")
                 st.rerun()
-            st.success('Done!')
-            st.image(images)  
+              
             with io.BytesIO() as img_buffer:
                     images.save(img_buffer, format="JPEG")
                     img_buffer.seek(0)
