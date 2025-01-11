@@ -9,40 +9,44 @@ API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffus
 api_token ='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'
 headers = {"Authorization": f"Bearer {api_token}"}
 
-
 st.title("AI Art🎨 Generator ✨")
 st.subheader('',divider='rainbow')
 st.subheader("Hello I am your AI art 👨‍🎨assistant. I will generate artworks for you😊 Let's try ............")
 
 with st.container(height= 180):
-	prompt = st.text_area('Type your prompt here')
+    prompt = st.text_area('Type your prompt here')
 
 def query(payload):
-	response = requests.post(API_URL, headers=headers, json=payload)
-	return response.content
+    response = requests.post(API_URL, headers=headers, json=payload)
+    return response.content
+
 image_bytes = query({
-	"inputs": prompt,
-	"parameters": {
-		"guidance_scale": 8.6,
-		"num_inference_steps":90,
-	}
+    "inputs": prompt,
+    "parameters": {
+        "guidance_scale": 8.6,
+        "num_inference_steps": 90,
+    }
 })
+
 images = Image.open(io.BytesIO(image_bytes))
-images.save('images.jpg')
+
 but1 = st.button("Generate")
 
 if but1:
-	if prompt=="" :
-		st.error('Please provide a valid prompt', icon= "🚨")
-	else:
-		with st.spinner("Please wait......."):
-			time.sleep(5)
-		st.success('Done!')
-		st.image(images)
-		with open ('images.jpg','rb') as img:
-			but2 = st.download_button(
-			label="Download",
-			data=img,
-			file_name='images.jpg',
-			mime='image/jpg'
-			)
+    if prompt == "":
+        st.error('Please provide a valid prompt', icon="🚨")
+    else:
+        with st.spinner("Please wait......."):
+            time.sleep(5)
+        st.success('Done!')
+        # Display image directly without saving
+        st.image(images)
+        with io.BytesIO() as img_buffer:
+            images.save(img_buffer, format="JPEG")
+            img_buffer.seek(0)
+            but2 = st.download_button(
+                label="Download",
+                data=img_buffer,
+                file_name='images.jpg',
+                mime='image/jpg'
+            )
