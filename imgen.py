@@ -67,6 +67,6 @@ if but1:
                     )
             except Exception as e:
                 st.error(f"Error opening the image: {str(e)}")
-                st.clear_cache()  # Clear the cache if there's an issue
+                st.rerun()  # Clear the cache if there's an issue
         else:
             st.error("Failed to generate an image. Please try again.")
