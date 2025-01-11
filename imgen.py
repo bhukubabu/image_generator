@@ -55,6 +55,7 @@ if but1:
             try:
                 images = Image.open(io.BytesIO(image_bytes))
                 st.success('Done!')
+                images.verify()
                 st.image(images)
             except Exception as e:
                 st.error(f"Error opening the image: {str(e)}")
