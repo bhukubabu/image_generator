@@ -5,23 +5,20 @@ import io
 from PIL import Image
 import time
 
-API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
-api_token ='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'
-headers = {"Authorization": f"Bearer {api_token}"}
+
+def query(payload):
+    API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+    api_token ='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'
+    headers = {"Authorization": f"Bearer {api_token}"}
+    response = requests.post(API_URL, headers=headers, json=payload)
+    return response.content
 
 st.title("AI Art🎨 Generator ✨")
 st.subheader('',divider='rainbow')
 st.subheader("Hello I am your AI art 👨‍🎨assistant. I will generate artworks for you😊 Let's try ............")
 
-with st.container(height= 180):
+with st.container(height= 280):
     prompt = st.text_area('Type your prompt here')
-
-def query(payload):
-    response = requests.post(API_URL, headers=headers, json=payload)
-    return response.content
-
-
-
 but1 = st.button("Generate")
 
 if but1:
@@ -37,11 +34,12 @@ if but1:
                 }
             })
         if image_bytes==200:
-            images = Image.open(io.BytesIO(image_bytes))
-            st.success('Done!')
-            # Display image directly without saving
-            st.image(images)
             try:
+                images = Image.open(io.BytesIO(image_bytes))
+                st.success('Done!')
+                # Display image directly without saving
+                st.image(images)
+            
                 with io.BytesIO() as img_buffer:
                     images.save(img_buffer, format="JPEG")
                     img_buffer.seek(0)
